@@ -44,7 +44,30 @@ contract Land is ERC721{
       require(supply <= maxSupply);
       require(buildings[_id-1].owner == address(0x0));
       require(msg.value >= cost);
+      totalSupply++;
+
+      _safeMint(msg.sender, _id);
    }
+
+   function transferFrom(address from, address to,uint256 tokenId) public override {
+      require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721: Transfer caller is not owner nor approved");
+      buildings[tokenId - 1].owner = to;
+      _transfer(from, to, tokenId);
+   }
+
+   function safeTransferFrom(address from, address to,uint256 tokenId, bytes memory _data) public override {
+      require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721: Transfer caller is not owner nor approved");
+      buildings[tokenId - 1].owner = to;
+      _safeTransfer(from, to, tokenId, _data);
+   }
+
+   function getBuildings() public view returns(Building[] memory) {
+      return buildings;
+   }
+
+   function getBuilding(uint256 _id) public view returns(Building memory){
+      return buildings[_id -1];
+   } 
 }
 
 
