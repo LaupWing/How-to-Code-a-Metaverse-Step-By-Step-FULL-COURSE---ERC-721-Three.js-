@@ -30,5 +30,3 @@ const Building = ({ position, size, landId, landInfo, setLandName, setLandOwner,
 }
 
 export default Building;
-© 2022 GitHub, Inc.
-   Terms
