@@ -2,6 +2,7 @@ import './App.css';
 import Web3 from 'web3';
 import { useEffect, useState } from 'react';
 import Land from './abis/Land.json'
+import Navbar from './components/Navbar';
 
 function App() {
    const [web3, setWeb3] = useState(null)
@@ -42,9 +43,16 @@ function App() {
          })
       }
    }
+   const web3Handler = async () => {
+		if (web3) {
+			const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+			setAccount(accounts[0])
+		}
+	}
+
    return (
       <div className="App">
-         
+         <Navbar web3Handler={web3Handler}/>
       </div>
    );
 }
